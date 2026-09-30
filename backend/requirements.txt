@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+google-genai
+firebase-admin
+google-cloud-texttospeech
+python-dotenv
+pydantic
+httpx
+websockets
+requests
+python-multipart

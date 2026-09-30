@@ -1,0 +1,24 @@
+# Secrets
+.env
+.env.*
+!.env.example
+crow-service-account.json
+*.json.bak
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Generated
+*.mp3
+
+# IDE
+.vscode/
+.idea/

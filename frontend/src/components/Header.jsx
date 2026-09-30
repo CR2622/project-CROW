@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Bird, MapPin, AlertTriangle, Siren, ChevronDown, CloudLightning } from 'lucide-react';
 import { useLocation } from '../context/LocationContext';
 import { triggerMockStorm } from '../utils/api';
+import crowLogo from '../assets/crow-logo.jpg';
 
 export default function Header({ alertStatus, isCritical, connectionStatus }) {
   const { location, locationKey, switchLocation, LOCATIONS } = useLocation();
@@ -16,7 +17,7 @@ export default function Header({ alertStatus, isCritical, connectionStatus }) {
   return (
     <header className="sticky top-0 z-50 bg-crow-bg border-b border-crow-border flex flex-col md:flex-row items-center justify-between p-4 min-h-[64px]">
       <div className="flex items-center space-x-2 text-white font-bold text-lg mb-2 md:mb-0">
-        <img src="/crow-logo.jpg" alt="CROW Logo" className="w-10 h-10 object-contain rounded-md border border-crow-border shadow-[0_0_8px_#4285F4]" />
+        <img src={crowLogo} alt="CROW Logo" className="w-10 h-10 object-contain rounded-md border border-crow-border shadow-[0_0_8px_#4285F4]" />
         <span className="tracking-widest">PROJECT CROW</span>
       </div>
 

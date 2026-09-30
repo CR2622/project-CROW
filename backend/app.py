@@ -12,6 +12,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
+import config  # Initializes all 7 API integrations securely
 
 # Import from existing CROW modules
 from pipeline import (

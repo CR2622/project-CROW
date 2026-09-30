@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Wind, Gauge, Shield, ServerCrash } from 'lucide-react';
+import { Activity, Wind, Gauge, Shield, ServerCrash, Droplets, Waves } from 'lucide-react';
 
 export default function TelemetryFeed({ telemetry }) {
   if (!telemetry) {
@@ -38,6 +38,22 @@ export default function TelemetryFeed({ telemetry }) {
             <span>Pressure</span>
           </div>
           <span className="text-xl font-semibold text-white">{telemetry.surface_pressure_hpa || '--'} hPa</span>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
+            <Droplets className="w-4 h-4" />
+            <span>Humidity</span>
+          </div>
+          <span className="text-xl font-semibold text-white">{telemetry.humidity || '--'}</span>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="flex items-center space-x-2 text-gray-400 text-sm mb-1">
+            <Waves className="w-4 h-4" />
+            <span>Storm Surge</span>
+          </div>
+          <span className={`text-xl font-semibold ${telemetry.storm_surge_m > 2 ? 'text-crow-red' : 'text-white'}`}>{telemetry.storm_surge_m ? `${telemetry.storm_surge_m} m` : '--'}</span>
         </div>
 
         {telemetry.vulnerability_score !== undefined && (

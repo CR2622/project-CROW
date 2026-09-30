@@ -18,7 +18,7 @@ export default function App() {
 
       <main className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         <div className="lg:w-[40%] h-[300px] lg:h-auto lg:sticky lg:top-16">
-          <MapPanel agentData={agentData} />
+          <MapPanel agentData={agentData} telemetry={telemetry} />
         </div>
 
         <div className="lg:w-[60%] overflow-y-auto p-4 space-y-4">

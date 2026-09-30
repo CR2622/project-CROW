@@ -27,3 +27,12 @@ export async function runAnalysis(lat = 17.6868, lon = 83.2185, userId = 'demo_c
     return { system_degraded: true, error: err.message }
   }
 }
+
+export async function triggerMockStorm() {
+  try {
+    const res = await fetch(`${API_BASE}/mock-storm`, { method: 'POST' });
+    return await res.json();
+  } catch (err) {
+    console.error('Storm trigger failed:', err);
+  }
+}

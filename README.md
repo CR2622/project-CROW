@@ -84,7 +84,7 @@ npm install
 npm run dev
 ```
 
-Navigate to **http://localhost:5173** to access the CROW Crisis Command dashboard.
+Navigate to **http://localhost:5555** to access the CROW Crisis Command dashboard.
 
 ---
 

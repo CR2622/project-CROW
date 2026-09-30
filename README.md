@@ -1,33 +1,97 @@
 # Project CROW (Cybernetic Resilience & Operational Warning)
 
-Project CROW is a B2C Citizen-Centric disaster architecture designed to provide real-time, personalized evacuation, financial budgeting, and safety information to users facing impending natural disasters like cyclones.
+> **"The watchful crow senses the tempest before it breaks."**
 
-## Key Features
+Project CROW is a B2C Citizen-Centric disaster survival architecture designed for the Bengal and Visakhapatnam (Vizag) coastal corridor. It shifts disaster response from *reactive* to *anticipatory*, operating 24-48 hours pre-landfall to prevent cascading infrastructure failures from trapping citizens.
 
-1.  **Dynamic Evacuation Routing**: Utilizes Gemini 1.5 Flash to provide personalized turn-by-turn routes that avoid flood zones, adapting dynamically to changing weather conditions via WebSockets.
-2.  **Financial Budgeting**: Analyzes a mock Plaid bank link to set survival budgets and trigger simulated micro-insurance payouts if the storm severity is high and the user's balance is low.
-3.  **Twilio Offline Guardian**: A fallback SMS system that dispatches critical evacuation routes if the primary network drops, ensuring citizens receive life-saving instructions even during a 5G outage.
-4.  **Empathic Voice Advisory**: Generates a calm, authoritative SSML audio warning using Google Cloud Text-to-Speech, acting as a personal guardian copilot.
+Built as a high-stakes "Crisis Command War Room," it uses Gemini 1.5 Flash to act as an Overseer Agent coordinating four distinct resilience lifelines.
 
-## Architecture
+## 🦅 The 4 Agent Lifelines
 
-The backend is built with **FastAPI** and is fully asynchronous, utilizing `httpx` for external API calls and WebSocket connections for real-time telemetry streaming to the frontend.
+1. **Agent Alpha (Grid-Lock / Home Hardening):** Generates property lockdown tasks and simulates SCADA substation shutdowns to prevent flood-induced electrocution.
+2. **Agent Beta (Dynamic Routing):** Calculates real-time inland medical evacuation routes, routing users away from coastal inundation zones to safe shelters.
+3. **Agent Gamma (Financial Oracle):** Simulates checking a linked bank account and releasing parametric micro-insurance day-zero survival funds.
+4. **Agent Delta (Offline Guardian):** A Twilio SMS fallback that texts evacuation routes if the user loses Wi-Fi or 5G connectivity.
 
--   **`app.py`**: The main FastAPI gateway handling HTTP requests and WebSocket connections.
--   **`pipeline.py`**: Fetches weather telemetry (Open-Meteo), elevation data (Google Maps), and computes vulnerability scores. Includes mock financial integrations.
--   **`agent.py`**: The core Gemini orchestration logic, injecting local disaster resilience context and strictly validating output against a multi-tiered `CrowCitizenSchema`.
--   **`database.py`**: Persists active citizen state to Firebase Firestore concurrently using UUIDs.
--   **`voice.py`**: Synthesizes the SSML text-to-speech audio files.
--   **`sms.py`**: The Twilio offline fallback implementation.
+## 🌟 Key Technical Features
 
-## Quickstart
+- **Tri-Agent Architecture & Strict JSON Validation:** Orchestrated by Gemini 1.5 Flash using structured Pydantic schemas (`CrowCitizenSchema`).
+- **Live Telemetry & Delta Checks:** WebSockets stream live Open-Meteo data every 5 seconds. To respect rate limits, the Gemini API is only triggered when wind speeds change by >10 km/h (Delta Check).
+- **Dynamic Region Switcher:** Toggle between the Visakhapatnam and Bay of Bengal coastal corridors. The map and telemetry instantly reconnect and adapt.
+- **Offline Guardian Device Sync:** Users can sync their device phone number (persisted via `localStorage`) to receive fallback SMS alerts during simulated 5G tower collapses.
+- **Cyber-Command React UI:** Built with Vite, Tailwind CSS, Leaflet, and Lucide React, featuring a stark dark-mode aesthetic (charcoal backgrounds, pulsing alerts, and strict Google Cloud accent colors).
+- **Graceful Degradation:** All external APIs (Open-Meteo, Gemini, Firebase, Google TTS, Twilio) are wrapped in try/catch blocks to ensure the UI gracefully falls back to mock data (`system_degraded: true`) rather than crashing.
+
+---
+
+## 🏗️ Project Structure
+
+```text
+project-crow/
+├── backend/
+│   ├── app.py             # FastAPI WebSocket & HTTP Gateway
+│   ├── agent.py           # Gemini 1.5 Flash Orchestration
+│   ├── pipeline.py        # Open-Meteo & Elevation Data Fetching
+│   ├── database.py        # Firebase Firestore Sync
+│   ├── sms.py             # Twilio SMS Fallback
+│   └── voice.py           # Google Cloud TTS Engine
+└── frontend/
+    ├── src/
+    │   ├── components/    # UI Widgets (Tabs, Map, Telemetry Feed)
+    │   ├── context/       # Location & Phone Sync Contexts
+    │   ├── hooks/         # WebSocket Auto-Reconnect Hook
+    │   └── utils/         # API Fetch Helpers
+    ├── tailwind.config.js # CROW Dark Mode Theme
+    └── vite.config.js     # Dev Server & Backend Proxy
+```
+
+---
+
+## 🚀 Quickstart Guide
+
+### 1. Backend Setup (FastAPI)
 
 ```bash
-cd project-crow/backend
+cd backend
+
+# Create and activate virtual environment
 python -m venv venv
-source venv/bin/activate
+# Windows: venv\Scripts\activate
+# Mac/Linux: source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Environment Setup
 cp .env.example .env
-# Fill in your .env variables
-uvicorn app:app --reload
+# Open .env and add your GEMINI_API_KEY, TWILIO, and GCP credentials
+
+# Start the API server
+uvicorn app:app --reload --port 8000
 ```
+
+### 2. Frontend Setup (React/Vite)
+
+Open a **new terminal tab**:
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the dev server
+npm run dev
+```
+
+Navigate to **http://localhost:5173** to access the CROW Crisis Command dashboard.
+
+---
+
+## 🔌 API Endpoints
+
+- `GET /api/v1/health`: Service health check.
+- `POST /api/v1/crow-analyze`: One-shot disaster analysis based on coordinates.
+- `WS /api/v1/ws/dynamic-evac`: Real-time bidirectional WebSocket stream for live telemetry and agent updates.
+- `POST /api/v1/simulate-outage`: Chaos trigger that fires the Twilio SMS offline fallback.
+- `POST /api/v1/voice-broadcast`: Generates SSML TTS advisory audio.

@@ -9,3 +9,5 @@ httpx
 websockets
 requests
 python-multipart
+twilio
+googlemaps

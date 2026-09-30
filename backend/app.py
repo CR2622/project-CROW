@@ -37,6 +37,15 @@ app = FastAPI(
     version="1.0.0",
 )
 
+
+MOCK_STORM_ACTIVE = False
+
+@app.post('/api/v1/mock-storm')
+async def trigger_mock_storm():
+    global MOCK_STORM_ACTIVE
+    MOCK_STORM_ACTIVE = not MOCK_STORM_ACTIVE
+    return {'status': 'Storm simulated!' if MOCK_STORM_ACTIVE else 'Storm reset.', 'active': MOCK_STORM_ACTIVE}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://localhost:3000", "*"],

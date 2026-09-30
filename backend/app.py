@@ -292,3 +292,23 @@ async def voice_broadcast(req: VoiceRequest):
             "system_degraded": True,
             "error": str(e),
         }
+
+# ---------------------------------------------------------------------------
+# REACT STATIC FILE SERVING FOR CLOUD RUN
+# ---------------------------------------------------------------------------
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
+if os.path.exists(static_dir):
+    app.mount("/assets", StaticFiles(directory=os.path.join(static_dir, "assets")), name="assets")
+    
+    @app.get("/")
+    async def serve_react_app():
+        return FileResponse(os.path.join(static_dir, 'index.html'))
+        
+    @app.exception_handler(404)
+    async def catch_all(request, exc):
+        return FileResponse(os.path.join(static_dir, 'index.html'))
+
